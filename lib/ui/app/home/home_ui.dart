@@ -125,6 +125,21 @@ class _HomeUiState extends State<HomeUi> {
   }
 
   void _simulateCredit() {
+    if (_selectedCreditType == 0) {
+      SnackBarMessage(type: SnackBarMessage.DANGER, message: 'Selecciona un tipo de crédito', marginBottom: 70).show();
+      return;
+    }
+
+    if (shareCtrl.text == '') {
+      SnackBarMessage(type: SnackBarMessage.DANGER, message: 'Ingresa un salario', marginBottom: 70).show();
+      return;
+    }
+
+    if (monthCtrl.text == '') {
+      SnackBarMessage(type: SnackBarMessage.DANGER, message: 'Ingresa los meses', marginBottom: 70).show();
+      return;
+    }
+
     double interestRate = 0.0;
     if (_selectedCreditType == 1) {
       // Crédito de vehículo (3%)

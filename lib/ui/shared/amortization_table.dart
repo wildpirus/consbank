@@ -157,8 +157,19 @@ class __ContentState extends State<_Content> {
                       fontSize: 18,
                     ),
                   ),
+                  const SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text(
+                        'Tabla de créditos',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      Icon(Icons.filter_alt_rounded, size: 30),
+                    ],
+                  ),
                   SizedBox(
-                    height: Get.height * 0.65,
+                    height: Get.height * 0.6,
                     child: SingleChildScrollView(
                       scrollDirection: Axis.vertical,
                       child: SingleChildScrollView(
