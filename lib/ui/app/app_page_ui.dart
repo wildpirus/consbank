@@ -56,7 +56,7 @@ class __ContentState extends State<_Content> {
     return Stack(
       alignment: Alignment.topLeft,
       children: [
-        appRoutes.elementAt(_currentIndex),
+        SingleChildScrollView(child: appRoutes.elementAt(_currentIndex)),
         Positioned(
           child: Align(
             alignment: FractionalOffset.bottomCenter,

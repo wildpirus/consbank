@@ -45,6 +45,9 @@ dependencies:
   get: ^4.6.1
   get_storage: ^2.0.3
   flutter_easyloading: ^3.0.3
+  intl: ^0.18.1
+  open_file: ^3.0.3
+  excel: ^2.1.0
 
 dev_dependencies:
   flutter_test:

@@ -6,16 +6,28 @@ String profileStateToJson(ProfileState profileState) => json.encode(profileState
 @immutable
 class ProfileState {
   final User? user;
+  final double? loanAmount;
+  final double? interestRate;
+  final int? numberOfPayments;
 
   const ProfileState({
     this.user,
+    this.loanAmount,
+    this.interestRate,
+    this.numberOfPayments,
   });
 
   ProfileState copyWith({
     User? user,
+    double? loanAmount,
+    double? interestRate,
+    int? numberOfPayments,
   }) =>
       ProfileState(
         user: user ?? this.user,
+        loanAmount: loanAmount ?? this.loanAmount,
+        interestRate: interestRate ?? this.interestRate,
+        numberOfPayments: numberOfPayments ?? this.numberOfPayments,
       );
 
   factory ProfileState.fromJson(Map<String, dynamic> json) => ProfileState(
