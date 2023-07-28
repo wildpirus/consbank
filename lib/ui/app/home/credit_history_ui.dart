@@ -1,9 +1,6 @@
 import 'package:consbank/bloc/profile/profile_bloc.dart';
 import 'package:consbank/models/user_model.dart';
-import 'package:consbank/styles/consbank_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
@@ -35,11 +32,44 @@ class _Content extends StatefulWidget {
 
 class __ContentState extends State<_Content> {
   List<Map<String, dynamic>> tableData = [];
+  int _selectedRowIndex = -1;
 
-  @override
-  void initState() {
-    super.initState();
-    _generateAmortizationTable();
+  double parseStringToDouble(String value) {
+    String stringValue = value.replaceAll(RegExp(r'[^\d]'), '');
+    return double.tryParse(stringValue) ?? 0.0;
+  }
+
+  List<DataRow> _buildRows() {
+    List<Map<String, dynamic>> data = [];
+
+    return data.map((item) {
+      final index = data.indexOf(item);
+      final selected = index == _selectedRowIndex;
+
+      return DataRow(
+        selected: selected,
+        onSelectChanged: (value) {
+          setState(() {
+            _selectedRowIndex = selected ? -1 : index;
+          });
+
+          if (value == true) {
+            context.read<ProfileBloc>().add(NewAmortization(
+                  parseStringToDouble(item['loanAmount']),
+                  item['interestRate'],
+                  int.tryParse(item['numberOfPayments']) ?? 0,
+                ));
+            Get.toNamed('/amortization');
+          }
+        },
+        cells: [
+          DataCell(Text(item['loanAmount'].toString())),
+          DataCell(Text(item['date'].toString())),
+          DataCell(Text(item['numberOfPayments'].toString())),
+          DataCell(Text(item['interestRate'].toString())),
+        ],
+      );
+    }).toList();
   }
 
   void _generateAmortizationTable() {
@@ -86,14 +116,7 @@ class __ContentState extends State<_Content> {
                     DataColumn(label: Text('No. de cuotas')),
                     DataColumn(label: Text('Interés')),
                   ],
-                  rows: tableData.map((data) {
-                    return DataRow(cells: [
-                      DataCell(Text(data['loanAmount'].toString())),
-                      DataCell(Text(data['date'].toString())),
-                      DataCell(Text(data['numberOfPayments'].toString())),
-                      DataCell(Text(data['interestRate'].toString())),
-                    ]);
-                  }).toList(),
+                  rows: _buildRows(),
                 ),
               ),
             ),
